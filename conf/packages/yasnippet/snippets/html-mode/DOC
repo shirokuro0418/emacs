@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: DOC
+# key: DOC
+# --
+<!DOCTYPE html>
+<head lang="ja">
+  <meta charset="utf-8" />
+  <title>$1</title>
+</head>
+<body>
+        $0
+</body>
+</html>

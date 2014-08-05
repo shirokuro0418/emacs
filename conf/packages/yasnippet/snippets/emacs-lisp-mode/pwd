@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pwd
+# key: pwd
+# --
+`(buffer-file-name)`
