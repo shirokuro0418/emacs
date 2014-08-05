@@ -1,0 +1,3 @@
+[submodule "elisp/themes"]
+	path = elisp/themes
+	url = https://github.com/emacs-jp/replace-colorthemes.git

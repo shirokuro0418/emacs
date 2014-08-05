@@ -24,3 +24,20 @@
 (define-key yas-minor-mode-map (kbd "C-c y n") 'yas-new-snippet)
 ;; 既存スニペットを閲覧・編集する
 (define-key yas-minor-mode-map (kbd "C-c y v") 'yas-visit-snippet-file)
+
+;; helm
+(require 'helm-config)
+(require 'helm-ag)
+(require 'helm-descbinds)
+(helm-descbinds-mode)
+; agのデフォルトのコマンドオプションを指定
+; -nを消すとサブディレクトリも再帰的に検索します
+(setq helm-ag-base-command "ag --nocolor --nogroup -n")
+
+(global-set-key (kbd "C-;")    'helm-mini)
+(global-set-key (kbd "M-x")    'helm-M-x)
+(global-set-key (kbd "<f1> b") 'helm-descbinds)
+(global-set-key (kbd "C-c o")  'helm-occur)
+(global-set-key (kbd "C-c s")  'helm-ag)
+(global-set-key (kbd "M-y")    'helm-show-kill-ring)
+
