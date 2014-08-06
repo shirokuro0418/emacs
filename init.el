@@ -2,6 +2,11 @@
 (require 'cl)
 (require 'flymake)
 
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+
 (unless (window-system)
     (progn
       )
@@ -90,8 +95,9 @@
                                  (eq (cadr d) (cadr e))))
                whitespace-display-mappings)))
       ;; 全角スペースと改行を追加
-      (dolist (e '((space-mark ?\x3000 [?\□])
-                   (newline-mark  ?\n     [?\u21B5 ?\n] [?$ ?\n])))
+      (dolist (e '(;; (space-mark ?\x3000 [?\□])
+                   (newline-mark  ?\n     ;; [?\u21B5 ?\n]
+                                  [?$ ?\n])))
         (add-to-list 'whitespace-display-mappings e))
       ;; 強調したくない要素を削除
       (dolist (d '(face lines space-before-tab
