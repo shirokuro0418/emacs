@@ -15,10 +15,10 @@
 (require 'css-mode)
 (setq css-indent-offset 2)
 
-;; server-start
-(require 'server)
-(unless (server-running-p)
-  (server-start))
+;; ;; server-start
+;; (require 'server)
+;; (unless (server-running-p)
+;;   (server-start))
 
 
 ;; ;; filecache
@@ -36,3 +36,4 @@
 
 ;; cua-modoの編集
 (setq cua-enable-cua-keys nil)          ;cuaのキーバインドを無効に
+

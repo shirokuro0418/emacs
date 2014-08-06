@@ -41,3 +41,8 @@
 (global-set-key (kbd "C-c s")  'helm-ag)
 (global-set-key (kbd "M-y")    'helm-show-kill-ring)
 
+(add-to-list 'custom-theme-load-path
+             (file-name-as-directory "~/.emacs.d/elisp/themes/"))
+
+(load-theme 'desert t t)
+(enable-theme 'desert)

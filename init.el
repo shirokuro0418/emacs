@@ -76,18 +76,29 @@
 
       ;; 空白や長すぎる行を視覚化する。
       (require 'whitespace)
-                                        ; 1行が100桁を超えたら長すぎると判断する。
+      ; 1行が100桁を超えたら長すぎると判断する。
       (setq whitespace-line-column 100)
-      (setq whitespace-style '(face              ; faceを使って視覚化する。
-                               trailing          ; 行末の空白を対象とする。
-                               lines-tail        ; 長すぎる行のうち
-                                        ; whitespace-line-column以降のみを
-                                        ; 対象とする。
-                               space-before-tab  ; タブの前にあるスペースを対象とする。
-                               space-after-tab   ; タブの後にあるスペースを対象とする。
-                                        ;                         spaces
-                               newline
-                               ))
+      ;; スペースの定義は全角スペースとする。
+      (setq whitespace-space-regexp "\x3000+")
+      ;; 改行の色を変更
+      (set-face-foreground 'whitespace-newline "gray40")
+      ;; 半角スペースと改行を除外
+      (dolist (d '((space-mark ?\ ) (newline-mark ?\n)))
+        (setq whitespace-display-mappings
+              (delete-if
+               '(lambda (e) (and (eq (car d) (car e))
+                                 (eq (cadr d) (cadr e))))
+               whitespace-display-mappings)))
+      ;; 全角スペースと改行を追加
+      (dolist (e '((space-mark ?\x3000 [?\□])
+                   (newline-mark  ?\n     [?\u21B5 ?\n] [?$ ?\n])))
+        (add-to-list 'whitespace-display-mappings e))
+      ;; 強調したくない要素を削除
+      (dolist (d '(face lines space-before-tab
+                        indentation empty space-after-tab tab-mark))
+        (setq whitespace-style (delq d whitespace-style)))
+
+
       ;; デフォルトで視覚化を有効にする。
       (global-whitespace-mode t)
 
@@ -130,7 +141,7 @@
 
       ;; 部分一致の補完機能を使う
       ;; p-bでprint-bufferとか
-                                        ; (partial-completion-mode t)
+      ; (partial-completion-mode t)
 
       ;; 補完可能なものを随時表示
       ;; 少しうるさい
@@ -148,36 +159,20 @@
       ;; 現在のウィンドウの上部に関数名を表示
       (which-function-mode t)
 
-      ;; 終了時にオートセーブファイルを消す
-      (setq delete-auto-save-files t)
-
-      ;; フォントの設定
-      (set-face-attribute 'default nil
-                          :family "Menlo" ;; font
-                          :height 120)    ;; font size
-      (set-fontset-font
-       nil 'japanese-jisx0208
-       (font-spec :family "Hiragino Mincho Pro"))
+      ;; 英字
+      (set-face-attribute 'default nil :family "Ricty" :height 140)
+      ;; 日本語
+      (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Ricty"))
       ;; フォント幅調整
       (setq face-font-rescale-alist
-            '((".*Hiragino_Mincho_Pro.*" . 1.2)))
-      ;; (set-face-foreground 'font-lock-comment-face "grey44")
-      (set-face-foreground 'font-lock-comment-delimiter-face "grey44")
+            '((".*Ricty.*" . 1.1)))
       ;; フォントテスト
-      ;; ------------------------------
-      ;; |  0123456789012345678901234 |
-      ;; |  abcdefghijklnmopqrstuvwxy |
+      ;; -------------------------------
+      ;; |  01234567890123456789012345 |
+      ;; |  abcdefghijklnmopqrstuvwxyz |
       ;; |　あいうえおかきくけこさしす |
-      ;; | ０１２３４５６７８９０１２ |
-      ;; ------------------------------
-
-      ;; フレームの設定
-      (setq initial-frame-alist
-            (append'((top    .22)
-                     (left   .600)
-                     (width  .104)
-                     (height .50))
-                   initial-frame-alist))
+      ;; |  ０１２３４５６７８９０１２ |
+      ;; -------------------------------
 
       ;; 標準Elispの設定
       (load "builtins")
